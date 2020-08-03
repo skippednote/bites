@@ -1,6 +1,7 @@
-const Airtable = require("airtable");
-const slug = require("slug");
-const { S3 } = require("aws-sdk");
+import {NextApiRequest, NextApiResponse} from 'next'
+import Airtable  from "airtable";
+import slug  from "slug";
+import { S3 } from "aws-sdk";
 const { AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, AIRTABLE_KEY } = process.env;
 
 const s3 = new S3({
@@ -9,7 +10,7 @@ const s3 = new S3({
 });
 const base = new Airtable({ apiKey: AIRTABLE_KEY }).base("appIBLFgF6dD2yNyl");
 
-export default async (req, res) => {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { data, name } = req.body;
     const [, sliced] = data.split(",");

@@ -1,5 +1,10 @@
 import { Player } from "./Player";
-export const Bites = ({ bites }) =>
+export type Bite = {
+  name: string;
+  url: string;
+  created_on: string;
+}
+export const Bites = ({ bites }: {bites:Bite[]}) =>
   bites &&
   bites.map((bite) => {
     return (
@@ -10,7 +15,7 @@ export const Bites = ({ bites }) =>
           marginBottom: "2rem",
         }}
       >
-        <Player audio={bite} />
+        <Player bite={bite} />
         <p>{bite.name}</p>
         <p>{bite.created_on}</p>
       </div>

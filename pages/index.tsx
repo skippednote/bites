@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {GetServerSideProps} from 'next'
 import Head from "next/head";
 import { Recorder } from "../components/Recorder";
 import { Player } from "../components/Player";
@@ -7,7 +8,6 @@ import { Bites } from "../components/Bites";
 
 export default function Home({ data }) {
   const [isUploading, setIsUploading] = useState("default");
-  const [recording, setRecording] = useState("stopped");
   const [audio, setAudio] = useState(null);
   const [bites, setBites] = useState(data);
 
@@ -42,7 +42,7 @@ export default function Home({ data }) {
   );
 }
 
-export async function getServerSideProps(context) {
+export const getServerSideProps: GetServerSideProps = async () => {
   const data = await fetch("http://localhost:3000/api/fetch").then((r) =>
     r.json()
   );

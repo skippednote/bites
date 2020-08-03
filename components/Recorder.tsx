@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 export const Recorder = ({ setAudio }) => {
   const [recording, setRecording] = useState("stopped");
-  const [recorder, setRecorder] = useState(null);
+  const [recorder, setRecorder] = useState<{mr: MediaRecorder, stream: MediaStream}>(null);
   const chunks = [];
 
   const record = async () => {

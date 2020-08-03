@@ -10,11 +10,12 @@
 - [x] Add a `bites random` command
 - [x] Rename `bites` to `bites ls`
 - [x] Move to Next.js
-- [ ] Update listener function
-- [ ] Convert JS to TS
-- [ ] Refactor App.js
-- [ ] Add tests wherever possible
+- [x] Update listener function
+- [x] Convert JS to TS
+- [x] Refactor App.js
+- [ ] Strict type checking
 - [ ] Authentication and Authorization
+- [ ] Add tests wherever possible
 - [ ] Cleanup the UI
 - [ ] Check if the webm file has all the meta data
 
