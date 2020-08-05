@@ -13,8 +13,9 @@
 - [x] Update listener function
 - [x] Convert JS to TS
 - [x] Refactor App.js
-- [ ] Strict type checking
-- [ ] Authentication and Authorization
+- [x] Strict type checking
+- [ ] Authentication
+- [ ] Authorization
 - [ ] Add tests wherever possible
 - [ ] Cleanup the UI
 - [ ] Check if the webm file has all the meta data
