@@ -1,6 +1,6 @@
-import {NextApiRequest, NextApiResponse} from 'next'
-import Airtable  from "airtable";
-import slug  from "slug";
+import { NextApiRequest, NextApiResponse } from "next";
+import Airtable from "airtable";
+import slug from "slug";
 import { S3 } from "aws-sdk";
 const { AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, AIRTABLE_KEY } = process.env;
 

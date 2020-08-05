@@ -4,12 +4,14 @@ import Head from "next/head";
 import { Recorder } from "../components/Recorder";
 import { Player } from "../components/Player";
 import { Upload } from "../components/Upload";
-import { Bites } from "../components/Bites";
+import { Bites, Bite } from "../components/Bites";
+import {Audio} from '../components/Upload'
 
-export default function Home({ data }) {
+export default function Home({ data }:  {data: Bite[]}) {
   const [isUploading, setIsUploading] = useState("default");
-  const [audio, setAudio] = useState(null);
+  const [audio, setAudio] = useState<Audio>();
   const [bites, setBites] = useState(data);
+
 
   useEffect(() => {
     const go = async () => {
@@ -30,7 +32,7 @@ export default function Home({ data }) {
       </Head>
       <h1>Sound Bite Recorder</h1>
       <Recorder setAudio={setAudio} />
-      <Player audio={audio} />
+      <Player bite={audio} />
       <Upload
         isUploading={isUploading}
         setIsUploading={setIsUploading}
@@ -43,10 +45,20 @@ export default function Home({ data }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const data = await fetch("http://localhost:3000/api/fetch").then((r) =>
-    r.json()
-  );
-  return {
-    props: { data },
-  };
+  try {
+    const data = await fetch("http://localhost:3000/api/fetch").then((r) =>
+      r.json()
+    );
+    return {
+      props: { data },
+    };
+  } catch(e) {
+    console.log({ e })
+
+    return {
+      props: {
+        data: []
+      }
+    }
+  }
 }

@@ -1,9 +1,25 @@
 import React, { useState } from "react";
+import {SetAudio} from './Recorder'
 
-export const Upload = ({ isUploading, setIsUploading, setAudio, audio }) => {
-  const [recordingName, setRecordingName] = useState(null);
+export type Audio = {
+  url: string;
+  data: string | ArrayBuffer | null
+} | undefined
+
+interface Props {
+  isUploading: string;
+  setIsUploading: (val: string) => void;
+  setAudio: SetAudio;
+  audio: Audio;
+}
+
+export const Upload = ({ isUploading, setIsUploading, setAudio, audio }: Props) => {
+  const [recordingName, setRecordingName] = useState<string>();
 
   const upload = async () => {
+    if (!audio || !audio.url) {
+      return
+    }
     setIsUploading("uploading");
     try {
       await fetch("/api/upload", {
@@ -17,7 +33,7 @@ export const Upload = ({ isUploading, setIsUploading, setAudio, audio }) => {
         }),
       });
       setIsUploading("success");
-      setAudio({});
+      setAudio(undefined)
     } catch (e) {
       setIsUploading("failed");
     }

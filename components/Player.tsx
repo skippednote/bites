@@ -1,11 +1,12 @@
 import React from "react";
-// type Audio = {
-//   url: string;
-//   data: string | ArrayBuffer
-// }
+import {Audio} from './Upload'
 import {Bite} from './Bites'
 
-export const Player = ({ bite }: {bite: Bite}) => {
+type Props = {
+  bite: Audio|Bite
+}
+
+export const Player = ({ bite }: Props) => {
   if (bite && bite.url) {
     return <audio controls src={bite.url} />;
   }

@@ -1,4 +1,4 @@
-import Airtable from 'airtable'
+import Airtable from "airtable";
 const { AIRTABLE_KEY } = process.env;
 
 export async function fetchAll() {
@@ -16,5 +16,3 @@ export async function fetchAll() {
 
   return records;
 }
-
-

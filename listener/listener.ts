@@ -1,17 +1,21 @@
 import tmi from "tmi.js";
 import { spawn } from "child_process";
 import { fetchAll } from "../query/fetchAll";
-import {Bite} from '../components/Bites'
+import { Bite } from "../components/Bites";
 const { TMI_TOKEN } = process.env;
 
 async function fetchBites() {
   try {
     const records = await fetchAll();
-    const r: {[key: string]: Bite}= records.reduce((acc, r) => {
+    const r: { [key: string]: Bite } = records.reduce((acc, r) => {
+      // @ts-ignore
       acc[r.fields["Name"]] = {
         id: r.id,
+        // @ts-ignore
         name: r.fields["Name"],
+        // @ts-ignore
         url: r.fields["URL"],
+        // @ts-ignore
         created_on: r.fields["Created On"],
       };
       return acc;
@@ -20,7 +24,6 @@ async function fetchBites() {
     return r;
   } catch (e) {
     console.log(e);
-    return [];
   }
 }
 
@@ -49,6 +52,7 @@ async function main() {
   client.connect().catch(console.error);
   client.on("message", async (channel, tags, message, self) => {
     if (self) return;
+    if (!bites) return;
     const { username } = tags;
 
     // !bites ls
@@ -75,7 +79,7 @@ async function main() {
       }
 
       // !bites [sound name]
-      if (bites[match[1]]) {
+      if (bites && bites[match[1]]) {
         client.say(channel, `@${username}: Playing the sound: ${match[1]}`);
         const { url } = bites[match[1]];
         spawn("vlc", ["--intf", "dummy", url]);

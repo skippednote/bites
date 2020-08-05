@@ -1,13 +1,16 @@
 import React, { useState } from "react";
+import {Audio} from './Upload'
 
-export const Recorder = ({ setAudio }) => {
+export type SetAudio =   React.Dispatch<React.SetStateAction<Audio>>;
+
+export const Recorder = ({ setAudio }: {setAudio: SetAudio}) => {
   const [recording, setRecording] = useState("stopped");
-  const [recorder, setRecorder] = useState<{mr: MediaRecorder, stream: MediaStream}>(null);
-  const chunks = [];
+  const [recorder, setRecorder] = useState<{mr: MediaRecorder, stream: MediaStream}>();
+  const chunks: Blob[] = [];
 
   const record = async () => {
     setRecording("recording");
-    setAudio({});
+    setAudio(undefined);
     const stream = await navigator.mediaDevices.getUserMedia({
       audio: true,
     });
@@ -32,18 +35,20 @@ export const Recorder = ({ setAudio }) => {
 
   const resume = () => {
     setRecording("recording");
-    recorder.mr.resume();
+    recorder && recorder.mr && recorder.mr.resume();
   };
 
   const pause = () => {
     setRecording("paused");
-    recorder.mr.pause();
+    recorder && recorder.mr && recorder.mr.pause();
   };
 
   const stop = () => {
     setRecording("stopped");
-    recorder.mr.stop();
-    recorder.stream.getTracks().forEach((t) => t.stop());
+    if (recorder) {
+      recorder.mr && recorder.mr.stop();
+      recorder.stream && recorder.stream.getTracks().forEach((t) => t.stop());
+    }
   };
 
   return recording === "stopped" ? (
