@@ -9,23 +9,23 @@
     "listener": "ts-node --project listener/tsconfig.json listener/listener.ts"
   },
   "dependencies": {
-    "airtable": "^0.8.1",
-    "aws-sdk": "^2.724.0",
+    "airtable": "0.8.1",
+    "aws-sdk": "2.724.0",
     "next": "9.5.0",
-    "next-auth": "^3.1.0",
+    "next-auth": "3.1.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "slug": "^3.3.2",
-    "tmi.js": "^1.5.0"
+    "slug": "3.3.2",
+    "tmi.js": "1.5.0"
   },
   "devDependencies": {
-    "@types/airtable": "^0.8.0",
-    "@types/dom-mediacapture-record": "^1.0.7",
-    "@types/node": "^14.0.27",
-    "@types/react": "^16.9.44",
-    "@types/slug": "^0.9.1",
-    "@types/tmi.js": "^1.4.0",
-    "ts-node": "^8.10.2",
-    "typescript": "^3.9.7"
+    "@types/airtable": "0.8.0",
+    "@types/dom-mediacapture-record": "1.0.7",
+    "@types/node": "14.0.27",
+    "@types/react": "16.9.44",
+    "@types/slug": "0.9.1",
+    "@types/tmi.js": "1.4.0",
+    "ts-node": "8.10.2",
+    "typescript": "3.9.7"
   }
 }
