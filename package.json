@@ -15,7 +15,7 @@
     "next-auth": "3.1.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "slug": "3.3.2",
+    "slug": "3.3.4",
     "tmi.js": "1.5.0"
   },
   "devDependencies": {
