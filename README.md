@@ -14,10 +14,12 @@
 - [x] Convert JS to TS
 - [x] Refactor App.js
 - [x] Strict type checking
-- [ ] Authentication
-- [ ] Authorization
-- [ ] Add tests wherever possible
+- [x] Authentication
+- [ ] Deploy the application
+- [ ] Approval
+- [ ] Fix type errors and warning
 - [ ] Cleanup the UI
+- [ ] Add tests wherever possible
 - [ ] Check if the webm file has all the meta data
 
 ---

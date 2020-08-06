@@ -12,7 +12,7 @@ const base = new Airtable({ apiKey: AIRTABLE_KEY }).base("appIBLFgF6dD2yNyl");
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { data, name } = req.body;
+    const { data, name, user } = req.body;
     const [, sliced] = data.split(",");
     const buffer = Buffer.from(sliced, "base64");
     const { Location } = await s3
@@ -28,6 +28,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       Name: name,
       URL: Location,
       "Created On": new Date().toISOString(),
+      User: JSON.stringify(user),
     });
 
     res.statusCode = 200;

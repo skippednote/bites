@@ -6,14 +6,21 @@ export type Audio = {
   data: string | ArrayBuffer | null
 } | undefined
 
+export type User = {
+  name: string;
+  email: string;
+  image: string;
+}
+
 interface Props {
   isUploading: string;
   setIsUploading: (val: string) => void;
   setAudio: SetAudio;
   audio: Audio;
+  user: User
 }
 
-export const Upload = ({ isUploading, setIsUploading, setAudio, audio }: Props) => {
+export const Upload = ({ isUploading, setIsUploading, setAudio, audio, user }: Props) => {
   const [recordingName, setRecordingName] = useState<string>();
 
   const upload = async () => {
@@ -30,6 +37,7 @@ export const Upload = ({ isUploading, setIsUploading, setAudio, audio }: Props) 
         body: JSON.stringify({
           data: audio.data,
           name: recordingName,
+          user
         }),
       });
       setIsUploading("success");

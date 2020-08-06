@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
-import {GetServerSideProps} from 'next'
+import { GetServerSideProps } from "next";
+import { useSession, getSession } from "next-auth/client";
 import Head from "next/head";
 import { Recorder } from "../components/Recorder";
 import { Player } from "../components/Player";
 import { Upload } from "../components/Upload";
 import { Bites, Bite } from "../components/Bites";
-import {Audio} from '../components/Upload'
+import { Audio } from "../components/Upload";
+import { Header } from "../components/Header";
 
-export default function Home({ data }:  {data: Bite[]}) {
+export default function Home({ data }: { data: Bite[] }) {
+  const [session, loading] = useSession();
   const [isUploading, setIsUploading] = useState("default");
   const [audio, setAudio] = useState<Audio>();
   const [bites, setBites] = useState(data);
-
 
   useEffect(() => {
     const go = async () => {
@@ -30,35 +32,49 @@ export default function Home({ data }:  {data: Bite[]}) {
         <title>Sound Bites</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Header session={session} />
       <h1>Sound Bite Recorder</h1>
-      <Recorder setAudio={setAudio} />
-      <Player bite={audio} />
-      <Upload
-        isUploading={isUploading}
-        setIsUploading={setIsUploading}
-        setAudio={setAudio}
-        audio={audio}
-      />
+      {session && (
+        <>
+          <Recorder setAudio={setAudio} />
+          <Player bite={audio} />
+          <Upload
+            isUploading={isUploading}
+            setIsUploading={setIsUploading}
+            setAudio={setAudio}
+            audio={audio}
+            user={session.user}
+          />
+        </>
+      )}
       <Bites bites={bites} />
     </div>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
-    const data = await fetch("http://localhost:3000/api/fetch").then((r) =>
+    const session = await getSession(context);
+    let data = await fetch("http://localhost:3000/api/fetch").then((r) =>
       r.json()
     );
+    data = data.map(b => {
+      if (b.user) {
+      b.user = JSON.parse(b.user)
+      }
+
+      return b;
+    })
     return {
-      props: { data },
+      props: { data, session },
     };
-  } catch(e) {
-    console.log({ e })
+  } catch (e) {
+    console.log({ e });
 
     return {
       props: {
-        data: []
-      }
-    }
+        data: [],
+      },
+    };
   }
-}
+};
