@@ -8,7 +8,7 @@ import { Upload } from "../components/Upload";
 import { Bites, Bite } from "../components/Bites";
 import { Audio } from "../components/Upload";
 import { Header } from "../components/Header";
-const {NEXTAUTH_URL} = process.env;
+const { NEXTAUTH_URL } = process.env;
 
 export default function Home({ data }: { data: Bite[] }) {
   const [session, loading] = useSession();
@@ -18,8 +18,15 @@ export default function Home({ data }: { data: Bite[] }) {
 
   useEffect(() => {
     const go = async () => {
-      const b = await fetch("/api/fetch").then((r) => r.json());
-      setBites(b);
+      let data = await fetch("/api/fetch").then((r) => r.json());
+      data = data.map((b) => {
+        if (b.user) {
+          b.user = JSON.parse(b.user);
+        }
+
+        return b;
+      });
+      setBites(data);
     };
 
     if (isUploading === "success") {
@@ -56,16 +63,14 @@ export default function Home({ data }: { data: Bite[] }) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const session = await getSession(context);
-    let data = await fetch(`${NEXTAUTH_URL}/api/fetch`).then((r) =>
-      r.json()
-    );
-    data = data.map(b => {
+    let data = await fetch(`${NEXTAUTH_URL}/api/fetch`).then((r) => r.json());
+    data = data.map((b) => {
       if (b.user) {
-      b.user = JSON.parse(b.user)
+        b.user = JSON.parse(b.user);
       }
 
       return b;
-    })
+    });
     return {
       props: { data, session },
     };
