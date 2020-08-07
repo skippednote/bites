@@ -15,8 +15,8 @@
 - [x] Refactor App.js
 - [x] Strict type checking
 - [x] Authentication
-- [ ] Deploy the application
-- [ ] Approval
+- [x] Deploy the application
+- [x] Approval
 - [ ] Fix type errors and warning
 - [ ] Cleanup the UI
 - [ ] Add tests wherever possible

@@ -4,19 +4,23 @@ import { fetchAll } from "../../query/fetchAll";
 export default async (_req: NextApiRequest, res: NextApiResponse) => {
   try {
     const records = await fetchAll();
-    const r = records.map((r) => {
-      return {
-        id: r.id,
-        // @ts-ignore
-        name: r.fields["Name"],
-        // @ts-ignore
-        url: r.fields["URL"],
-        // @ts-ignore
-        created_on: r.fields["Created On"],
-        // @ts-ignore
-        user: r.fields["User"],
-      };
-    });
+    const r = records
+      .map((r) => {
+        return {
+          id: r.id,
+          // @ts-ignore
+          name: r.fields["Name"],
+          // @ts-ignore
+          url: r.fields["URL"],
+          // @ts-ignore
+          created_on: r.fields["Created On"],
+          // @ts-ignore
+          user: r.fields["User"],
+          // @ts-ignore
+          approved: r.fields["Approved"],
+        };
+      })
+      .filter((b) => b.approved);
 
     res.statusCode = 200;
     res.json(r);

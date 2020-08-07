@@ -9,6 +9,10 @@ async function fetchBites() {
     const records = await fetchAll();
     const r: { [key: string]: Bite } = records.reduce((acc, r) => {
       // @ts-ignore
+      if (!r.fields["Approved"]) {
+        return acc;
+      }
+      // @ts-ignore
       acc[r.fields["Name"]] = {
         id: r.id,
         // @ts-ignore
