@@ -2,11 +2,11 @@ import { NextApiRequest, NextApiResponse } from "next";
 import Airtable from "airtable";
 import slug from "slug";
 import { S3 } from "aws-sdk";
-const { AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, AIRTABLE_KEY } = process.env;
+const { B_AWS_ACCESS_KEY, B_AWS_SECRET_ACCESS_KEY, AIRTABLE_KEY } = process.env;
 
 const s3 = new S3({
-  accessKeyId: AWS_ACCESS_KEY,
-  secretAccessKey: AWS_SECRET_ACCESS_KEY,
+  accessKeyId: B_AWS_ACCESS_KEY,
+  secretAccessKey: B_AWS_SECRET_ACCESS_KEY,
 });
 const base = new Airtable({ apiKey: AIRTABLE_KEY }).base("appIBLFgF6dD2yNyl");
 
