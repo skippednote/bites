@@ -20,9 +20,9 @@ export default function Home({ data }: { data: Bite[] }) {
     const go = async () => {
       let data = await fetch("/api/fetch").then((r) => r.json());
       data = data.map((b) => {
-        if (b.user) {
-          b.user = JSON.parse(b.user);
-        }
+        // if (b.user) {
+        //   b.user = JSON.parse(b.user);
+        // }
 
         return b;
       });
@@ -40,7 +40,7 @@ export default function Home({ data }: { data: Bite[] }) {
         <title>Sound Bites</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header session={session} />
+      <Header session={session} loading={loading} />
       <h1>Sound Bite Recorder</h1>
       {session && (
         <>
@@ -51,7 +51,7 @@ export default function Home({ data }: { data: Bite[] }) {
             setIsUploading={setIsUploading}
             setAudio={setAudio}
             audio={audio}
-            user={session.user}
+            user={session.userId}
           />
         </>
       )}
@@ -63,14 +63,7 @@ export default function Home({ data }: { data: Bite[] }) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const session = await getSession(context);
-    let data = await fetch(`${NEXTAUTH_URL}/api/fetch`).then((r) => r.json());
-    data = data.map((b) => {
-      if (b.user) {
-        b.user = JSON.parse(b.user);
-      }
-
-      return b;
-    });
+    const data = await fetch(`${NEXTAUTH_URL}/api/fetch`).then((r) => r.json());
     return {
       props: { data, session },
     };

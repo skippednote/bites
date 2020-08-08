@@ -24,11 +24,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       })
       .promise();
 
-    await base("Store").create({
+    await base("Bite").create({
       Name: name,
       URL: Location,
       "Created On": new Date().toISOString(),
-      User: JSON.stringify(user),
+      User: [user],
     });
 
     res.statusCode = 200;

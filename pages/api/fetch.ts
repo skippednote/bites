@@ -1,7 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import jwt from "next-auth/jwt";
+import { getSession } from "next-auth/client";
 import { fetchAll } from "../../query/fetchAll";
 
-export default async (_req: NextApiRequest, res: NextApiResponse) => {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const records = await fetchAll();
     const r = records
@@ -16,6 +18,12 @@ export default async (_req: NextApiRequest, res: NextApiResponse) => {
           created_on: r.fields["Created On"],
           // @ts-ignore
           user: r.fields["User"],
+          // @ts-ignore
+          userName:
+            r.fields["Name (from User)"] && r.fields["Name (from User)"][0],
+          // @ts-ignore
+          userImage:
+            r.fields["Image (from User)"] && r.fields["Image (from User)"][0],
           // @ts-ignore
           approved: r.fields["Approved"],
         };

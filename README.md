@@ -17,6 +17,9 @@
 - [x] Authentication
 - [x] Deploy the application
 - [x] Approval
+- [x] Split User and Bite
+- [ ] Show all sounds for Authorized users and only approved for unauthorized
+- [ ] Protected page for Authorized users to approve sound
 - [ ] Fix type errors and warning
 - [ ] Cleanup the UI
 - [ ] Add tests wherever possible
