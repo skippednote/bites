@@ -21,10 +21,11 @@
 - [x] Show all sounds for Authorized users and only approved for unauthorized
 - [x] Protected page for Authorized users to approve or update sound
 - [x] Add CORS to API endpoints
+- [x] Authorized user can delete bites
+- [ ] Check if the webm file has all the meta data
 - [ ] Fix type errors and warning
 - [ ] Cleanup the UI
 - [ ] Add tests wherever possible
-- [ ] Check if the webm file has all the meta data
 
 ---
 

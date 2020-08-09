@@ -29,19 +29,35 @@ const Form = ({ bite, setUpdated }) => {
     setUpdated(Math.random());
   };
 
+  const deleteBite = async () => {
+    await fetch("/api/delete", {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        id: bite.id,
+      }),
+    });
+    setUpdated(Math.random());
+  };
+
   return (
-    <form onSubmit={submit}>
-      <input
-        value={form.name}
-        onChange={(e) => setForm({ ...form, name: e.target.value })}
-      />
-      <input
-        type="checkbox"
-        checked={form.approved}
-        onChange={(e) => setForm({ ...form, approved: e.target.checked })}
-      />
-      <button type="submit">Update</button>
-    </form>
+    <>
+      <form onSubmit={submit}>
+        <input
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+        />
+        <input
+          type="checkbox"
+          checked={form.approved}
+          onChange={(e) => setForm({ ...form, approved: e.target.checked })}
+        />
+        <button type="submit">Update</button>
+      </form>
+      <button onClick={deleteBite}>Delete</button>
+    </>
   );
 };
 
