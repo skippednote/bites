@@ -1,13 +1,13 @@
 import tmi from "tmi.js";
 import { spawn } from "child_process";
 import { fetchAll } from "../query/fetchAll";
-import { Bite } from "../components/Bites";
+import { BiteI } from "../components/Bites";
 const { TMI_TOKEN } = process.env;
 
 async function fetchBites() {
   try {
     const records = await fetchAll();
-    const r: { [key: string]: Bite } = records.reduce((acc, r) => {
+    const r: { [key: string]: BiteI } = records.reduce((acc, r) => {
       // @ts-ignore
       if (!r.fields["Approved"]) {
         return acc;

@@ -19,7 +19,8 @@
 - [x] Approval
 - [x] Split User and Bite
 - [x] Show all sounds for Authorized users and only approved for unauthorized
-- [ ] Protected page for Authorized users to approve sound
+- [x] Protected page for Authorized users to approve or update sound
+- [x] Add CORS to API endpoints
 - [ ] Fix type errors and warning
 - [ ] Cleanup the UI
 - [ ] Add tests wherever possible

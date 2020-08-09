@@ -1,9 +1,9 @@
 import React from "react";
 import {Audio} from './Upload'
-import {Bite} from './Bites'
+import {BiteI} from './Bites'
 
 type Props = {
-  bite: Audio|Bite
+  bite: Audio|BiteI
 }
 
 export const Player = ({ bite }: Props) => {

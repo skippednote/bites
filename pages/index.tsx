@@ -2,15 +2,16 @@ import React, { useState, useEffect } from "react";
 import { GetServerSideProps } from "next";
 import { useSession, getSession } from "next-auth/client";
 import Head from "next/head";
+import Link from "next/link";
 import { Recorder } from "../components/Recorder";
 import { Player } from "../components/Player";
 import { Upload } from "../components/Upload";
-import { Bites, Bite } from "../components/Bites";
+import { Bites, Bite, BiteI } from "../components/Bites";
 import { Audio } from "../components/Upload";
 import { Header } from "../components/Header";
 const { NEXTAUTH_URL } = process.env;
 
-export default function Home({ data }: { data: Bite[] }) {
+export default function Home({ data }: { data: BiteI[] }) {
   const [session, loading] = useSession();
   const [isUploading, setIsUploading] = useState("default");
   const [audio, setAudio] = useState<Audio>();
@@ -18,14 +19,7 @@ export default function Home({ data }: { data: Bite[] }) {
 
   useEffect(() => {
     const go = async () => {
-      let data = await fetch("/api/fetch").then((r) => r.json());
-      data = data.map((b) => {
-        // if (b.user) {
-        //   b.user = JSON.parse(b.user);
-        // }
-
-        return b;
-      });
+      const data = await fetch("/api/fetch").then((r) => r.json());
       setBites(data);
     };
 
@@ -41,6 +35,9 @@ export default function Home({ data }: { data: Bite[] }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header session={session} loading={loading} />
+      <Link href="/admin">
+        <a>Admin</a>
+      </Link>
       <h1>Sound Bite Recorder</h1>
       {session && (
         <>
@@ -55,7 +52,9 @@ export default function Home({ data }: { data: Bite[] }) {
           />
         </>
       )}
-      <Bites bites={bites} />
+      <Bites bites={bites}>
+        {(bite: BiteI) => <Bite key={bite.id} bite={bite} />}
+      </Bites>
     </div>
   );
 }

@@ -1,10 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import jwt from "next-auth/jwt";
 import { fetchAll } from "../../query/fetchAll";
+import { cors } from "../../utils/middleware";
 const { SECRET } = process.env;
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
+    await cors(req, res);
     const token = await jwt.getToken({
       req,
       secret: SECRET,
