@@ -1,10 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import jwt from "next-auth/jwt";
-import { getSession } from "next-auth/client";
 import { fetchAll } from "../../query/fetchAll";
+const { SECRET } = process.env;
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
+    const token = await jwt.getToken({
+      req,
+      secret: SECRET,
+    });
     const records = await fetchAll();
     const r = records
       .map((r) => {
@@ -28,7 +32,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           approved: r.fields["Approved"],
         };
       })
-      .filter((b) => b.approved);
+      .filter((b) => token?.isAuthorized || b.approved);
 
     res.statusCode = 200;
     res.json(r);

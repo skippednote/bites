@@ -63,7 +63,11 @@ export default function Home({ data }: { data: Bite[] }) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const session = await getSession(context);
-    const data = await fetch(`${NEXTAUTH_URL}/api/fetch`).then((r) => r.json());
+    const data = await fetch(`${NEXTAUTH_URL}/api/fetch`, {
+      headers: {
+        cookie: context.req.headers.cookie,
+      },
+    }).then((r) => r.json());
     return {
       props: { data, session },
     };
