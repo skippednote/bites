@@ -17,10 +17,10 @@ interface Props {
   setIsUploading: (val: string) => void;
   setAudio: SetAudio;
   audio: Audio;
-  user: User
+  userId: string
 }
 
-export const Upload = ({ isUploading, setIsUploading, setAudio, audio, user }: Props) => {
+export const Upload = ({ isUploading, setIsUploading, setAudio, audio, userId }: Props) => {
   const [recordingName, setRecordingName] = useState<string>();
 
   const upload = async () => {
@@ -37,7 +37,7 @@ export const Upload = ({ isUploading, setIsUploading, setAudio, audio, user }: P
         body: JSON.stringify({
           data: audio.data,
           name: recordingName,
-          user
+          userId
         }),
       });
       setIsUploading("success");

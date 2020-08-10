@@ -13,7 +13,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const token = await jwt.getToken({
       req,
-      secret: SECRET,
+      secret: SECRET!,
     });
     if (!token || !token.isAuthorized) {
       throw new Error("Your are not Authorized");

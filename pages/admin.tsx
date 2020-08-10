@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FormEvent } from "react";
 import { GetServerSideProps } from "next";
 import { useSession, getSession } from "next-auth/client";
 import Head from "next/head";
@@ -6,15 +6,14 @@ import { Header } from "../components/Header";
 import { Bites, Bite, BiteI } from "../components/Bites";
 const { NEXTAUTH_URL } = process.env;
 
-const Form = ({ bite, setUpdated }) => {
+const Form = ({ bite, setUpdated }: {bite: BiteI, setUpdated: React.Dispatch<React.SetStateAction<number>>}) => {
   const [form, setForm] = useState({
     name: bite.name,
     approved: bite.approved,
   });
 
-  const submit = async (e) => {
+  const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const [name, approved] = e.currentTarget.elements;
     await fetch("/api/update", {
       method: "post",
       headers: {
@@ -64,7 +63,7 @@ const Form = ({ bite, setUpdated }) => {
 export default function Admin({ data }: { data: BiteI[] }) {
   const [session, loading] = useSession();
   const [bites, setBites] = useState(data);
-  const [updated, setUpdated] = useState();
+  const [updated, setUpdated] = useState<number>(0);
 
   useEffect(() => {
     const go = async () => {
@@ -105,7 +104,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getSession(context);
     const data = await fetch(`${NEXTAUTH_URL}/api/fetch`, {
       headers: {
-        cookie: context.req.headers.cookie,
+        cookie: context.req.headers.cookie || '',
       },
     }).then((r) => r.json());
     return {

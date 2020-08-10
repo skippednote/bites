@@ -32,13 +32,16 @@ export const Bite = ({bite}: { bite: BiteI }) => {
   );
 };
 
-// @ts-ignore
-export const Bites = ({ bites, children }: any) => {
+type Props = {
+  bites: BiteI[];
+  children(bite: BiteI): JSX.Element
+}
+
+export const Bites= ({ bites, children }: Props) => {
   return (
     <div>
       {bites &&
         bites.map((bite) => {
-          {/* return <Bite bite={bite} />; */}
           return children(bite)
         })}
     </div>

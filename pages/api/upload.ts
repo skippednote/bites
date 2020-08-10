@@ -23,12 +23,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     await cors(req, res);
     const token = await jwt.getToken({
       req,
-      secret: SECRET,
+      secret: SECRET!,
     });
     if (!token || !token.userId) {
       throw new Error("Your are not Authenticated");
     }
-    const { data, name, user } = req.body;
+    const { data, name, userId } = req.body;
     const [, sliced] = data.split(",");
     const buffer = Buffer.from(sliced, "base64");
     const { Location } = await s3
@@ -44,7 +44,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       Name: name,
       URL: Location,
       "Created On": new Date().toISOString(),
-      User: [user],
+      User: [userId],
     });
 
     res.statusCode = 200;

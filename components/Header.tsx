@@ -1,6 +1,17 @@
 import { signIn, signOut } from "next-auth/client";
 
-export const Header = ({ session, loading }) => {
+export interface Session {
+  expires: string;
+  isAuthorized: string;
+  user:{
+    name: string;
+    email: string;
+    image: string
+  }
+  userId: string;
+}
+
+export const Header = ({ session, loading }: {session: Session, loading: boolean}) => {
   if (!session) {
     return <button onClick={signIn}>Sign in</button>;
   } else if (loading) {

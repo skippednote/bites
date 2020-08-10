@@ -48,7 +48,7 @@ export default function Home({ data }: { data: BiteI[] }) {
             setIsUploading={setIsUploading}
             setAudio={setAudio}
             audio={audio}
-            user={session.userId}
+            userId={session.userId}
           />
         </>
       )}
@@ -64,7 +64,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getSession(context);
     const data = await fetch(`${NEXTAUTH_URL}/api/fetch`, {
       headers: {
-        cookie: context.req.headers.cookie,
+        cookie: context.req.headers.cookie || '',
       },
     }).then((r) => r.json());
     return {

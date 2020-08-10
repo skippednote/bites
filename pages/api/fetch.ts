@@ -9,7 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     await cors(req, res);
     const token = await jwt.getToken({
       req,
-      secret: SECRET,
+      secret: SECRET!,
     });
     const records = await fetchAll();
     const r = records
@@ -24,11 +24,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           created_on: r.fields["Created On"],
           // @ts-ignore
           user: r.fields["User"],
-          // @ts-ignore
           userName:
+            // @ts-ignore
             r.fields["Name (from User)"] && r.fields["Name (from User)"][0],
-          // @ts-ignore
           userImage:
+            // @ts-ignore
             r.fields["Image (from User)"] && r.fields["Image (from User)"][0],
           // @ts-ignore
           approved: r.fields["Approved"],

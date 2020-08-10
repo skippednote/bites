@@ -22,8 +22,8 @@
 - [x] Protected page for Authorized users to approve or update sound
 - [x] Add CORS to API endpoints
 - [x] Authorized user can delete bites
+- [x] Fix type errors and warning
 - [ ] Check if the webm file has all the meta data
-- [ ] Fix type errors and warning
 - [ ] Cleanup the UI
 - [ ] Add tests wherever possible
 
