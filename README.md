@@ -23,12 +23,7 @@
 - [x] Authorized user can delete bites
 - [x] Fix type errors and warning
 - [x] Check if the webm file has all the meta data (Browser (blink) limitation)
-- [ ] Cleanup the UI
-
-### Backlog
-
-- [ ] Add tests wherever possible
-- [ ] Server for running the listener
+- [x] Cleanup the UI
 
 ### Info
 

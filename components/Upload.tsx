@@ -1,31 +1,39 @@
 import React, { useState } from "react";
-import {SetAudio} from './Recorder'
+import { SetAudio } from "./Recorder";
 
-export type Audio = {
-  url: string;
-  data: string | ArrayBuffer | null
-} | undefined
+export type Audio =
+  | {
+      url: string;
+      data: string | ArrayBuffer | null;
+    }
+  | undefined;
 
 export type User = {
   name: string;
   email: string;
   image: string;
-}
+};
 
 interface Props {
   isUploading: string;
   setIsUploading: (val: string) => void;
   setAudio: SetAudio;
   audio: Audio;
-  userId: string
+  userId: string;
 }
 
-export const Upload = ({ isUploading, setIsUploading, setAudio, audio, userId }: Props) => {
+export const Upload = ({
+  isUploading,
+  setIsUploading,
+  setAudio,
+  audio,
+  userId,
+}: Props) => {
   const [recordingName, setRecordingName] = useState<string>();
 
   const upload = async () => {
     if (!audio || !audio.url) {
-      return
+      return;
     }
     setIsUploading("uploading");
     try {
@@ -37,29 +45,35 @@ export const Upload = ({ isUploading, setIsUploading, setAudio, audio, userId }:
         body: JSON.stringify({
           data: audio.data,
           name: recordingName,
-          userId
+          userId,
         }),
       });
       setIsUploading("success");
-      setAudio(undefined)
+      setAudio(undefined);
     } catch (e) {
       setIsUploading("failed");
     }
   };
 
   if (audio && audio.url) {
-    return isUploading === "uploading" ? (
-      <div>Uploading....</div>
-    ) : (
-      <>
-        <input
-          placeholder="Name the recording*"
-          onInput={(e) => setRecordingName(e.currentTarget.value)}
-        />
-        {recordingName && <button onClick={upload}>Upload!</button>}
-      </>
+    return (
+      <div className="upload">
+        {" "}
+        {isUploading === "uploading" ? (
+          <div>Uploading....</div>
+        ) : (
+          <div className="upload-form">
+            <input
+              style={{marginRight: '1rem'}}
+              className="input"
+              placeholder="Name the recording*"
+              onInput={(e) => setRecordingName(e.currentTarget.value)}
+            />
+            {recordingName && <button className="btn" onClick={upload}>Upload!</button>}
+          </div>
+        )}
+      </div>
     );
   }
-
   return null;
 };

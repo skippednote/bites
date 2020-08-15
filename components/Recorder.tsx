@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import {Audio} from './Upload'
+import { Audio } from "./Upload";
 
-export type SetAudio =   React.Dispatch<React.SetStateAction<Audio>>;
+export type SetAudio = React.Dispatch<React.SetStateAction<Audio>>;
 
-export const Recorder = ({ setAudio }: {setAudio: SetAudio}) => {
+export const Recorder = ({ setAudio }: { setAudio: SetAudio }) => {
   const [recording, setRecording] = useState("stopped");
-  const [recorder, setRecorder] = useState<{mr: MediaRecorder, stream: MediaStream}>();
+  const [recorder, setRecorder] = useState<{
+    mr: MediaRecorder;
+    stream: MediaStream;
+  }>();
   const chunks: Blob[] = [];
 
   const record = async () => {
@@ -51,16 +54,28 @@ export const Recorder = ({ setAudio }: {setAudio: SetAudio}) => {
     }
   };
 
-  return recording === "stopped" ? (
-    <button onClick={record}>Record</button>
-  ) : (
-    <>
-      {recording === "paused" ? (
-        <button onClick={resume}>Resume</button>
+  return (
+    <div className="recorder">
+      {recording === "stopped" ? (
+        <button className="btn" onClick={record}>
+          🎙️ Record
+        </button>
       ) : (
-        <button onClick={pause}>Pause</button>
+        <>
+          {recording === "paused" ? (
+            <button className="btn" onClick={resume}>
+              🎙️ Resume
+            </button>
+          ) : (
+            <button className="btn" style={{marginRight: '1rem'}} onClick={pause}>
+              ⏸️ Pause
+            </button>
+          )}
+          <button className="btn" onClick={stop}>
+            ⏹️ Stop
+          </button>
+        </>
       )}
-      <button onClick={stop}>Stop</button>
-    </>
+    </div>
   );
 };

@@ -6,7 +6,13 @@ import { Header } from "../components/Header";
 import { Bites, Bite, BiteI } from "../components/Bites";
 const { NEXTAUTH_URL } = process.env;
 
-const Form = ({ bite, setUpdated }: {bite: BiteI, setUpdated: React.Dispatch<React.SetStateAction<number>>}) => {
+const Form = ({
+  bite,
+  setUpdated,
+}: {
+  bite: BiteI;
+  setUpdated: React.Dispatch<React.SetStateAction<number>>;
+}) => {
   const [form, setForm] = useState({
     name: bite.name,
     approved: bite.approved,
@@ -43,19 +49,26 @@ const Form = ({ bite, setUpdated }: {bite: BiteI, setUpdated: React.Dispatch<Rea
 
   return (
     <>
-      <form onSubmit={submit}>
-        <input
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-        />
-        <input
-          type="checkbox"
-          checked={form.approved}
-          onChange={(e) => setForm({ ...form, approved: e.target.checked })}
-        />
-        <button type="submit">Update</button>
+      <form onSubmit={submit} className="form">
+        <div className="fields">
+          <input
+            className="input"
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+          />
+          <input
+            type="checkbox"
+            checked={form.approved}
+            onChange={(e) => setForm({ ...form, approved: e.target.checked })}
+            id={`check-${bite.id}`}
+          />
+          <label htmlFor={`check-${bite.id}`}></label>
+        </div>
+        <div className="btns">
+          <button className="btn" type="submit">Update</button>
+          <button className="btn" onClick={deleteBite}>Delete</button>
+        </div>
       </form>
-      <button onClick={deleteBite}>Delete</button>
     </>
   );
 };
@@ -75,20 +88,21 @@ export default function Admin({ data }: { data: BiteI[] }) {
   }, [updated]);
 
   return (
-    <div>
+    <div className="container">
       <Head>
-        <title>Sound Bites</title>
+        <title>Admin | Bites Recorder</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header session={session} loading={loading} />
-      <h1>Admin: Sound Bite Recorder</h1>
+      <h2 className="title">Admin</h2>
 
       {session && session.isAuthorized ? (
         <Bites bites={bites}>
           {(bite: BiteI) => (
             <div key={bite.id}>
-              <Bite bite={bite} />
-              <Form bite={bite} setUpdated={setUpdated} />
+              <Bite bite={bite}>
+                <Form bite={bite} setUpdated={setUpdated} />
+              </Bite>
             </div>
           )}
         </Bites>
@@ -104,7 +118,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getSession(context);
     const data = await fetch(`${NEXTAUTH_URL}/api/fetch`, {
       headers: {
-        cookie: context.req.headers.cookie || '',
+        cookie: context.req.headers.cookie || "",
       },
     }).then((r) => r.json());
     return {

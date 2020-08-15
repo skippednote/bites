@@ -30,7 +30,7 @@ declare module "next-auth/client" {
     context: import("next").GetServerSidePropsContext<
       import("querystring").ParsedUrlQuery
     >
-  ): import("./components/Header").Session;
+  ): Promise<import("./components/Header").Session>;
 
   export function signIn(): void;
   export function signOut(): void;

@@ -1,3 +1,4 @@
+import {FunctionComponent} from "react";
 import { Player } from "./Player";
 
 export type BiteI = {
@@ -11,38 +12,41 @@ export type BiteI = {
   approved?: boolean;
 };
 
-export const Bite = ({bite}: { bite: BiteI }) => {
+export const Bite: FunctionComponent<{bite: BiteI}> = ({ bite, children }) => {
+  const date = new Date(bite.created_on).toLocaleDateString();
   return (
-    <div
-      key={bite.id}
-      style={{
-        backgroundColor: "#ddd",
-        padding: "1rem",
-        marginBottom: "2rem",
-      }}
-    >
+    <div key={bite.id} className="bite">
       <Player bite={bite} />
-      <p>{bite.name}</p>
-      <p>{bite.created_on}</p>
-      <p>
-        {bite.userName}
-        <img style={{ height: 25 }} src={bite.userImage} alt={bite.userName} />
-      </p>
+      <div className="bite-meta">
+        <p className="bite-name">{bite.name}</p>
+        <div className="small">
+          <p>{date}</p>
+          <p className="bite-author">
+            {bite.userName}
+            <img className="image"
+              style={{ height: 25 }}
+              src={bite.userImage}
+              alt={bite.userName}
+            />
+          </p>
+        </div>
+      </div>
+      {children}
     </div>
   );
 };
 
 type Props = {
   bites: BiteI[];
-  children(bite: BiteI): JSX.Element
-}
+  children(bite: BiteI): JSX.Element;
+};
 
-export const Bites= ({ bites, children }: Props) => {
+export const Bites = ({ bites, children }: Props) => {
   return (
-    <div>
+    <div className="bites">
       {bites &&
         bites.map((bite) => {
-          return children(bite)
+          return children(bite);
         })}
     </div>
   );

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { GetServerSideProps } from "next";
-import { useSession, getSession } from "next-auth/client";
-import Head from "next/head";
-import Link from "next/link";
+import { useSession, getSession } from "next-auth/client"; import Head from "next/head";
 import { Recorder } from "../components/Recorder";
 import { Player } from "../components/Player";
 import { Upload } from "../components/Upload";
@@ -29,28 +27,28 @@ export default function Home({ data }: { data: BiteI[] }) {
   }, [isUploading]);
 
   return (
-    <div>
+    <div className="container">
       <Head>
-        <title>Sound Bites</title>
+        <title>Bites Recorder</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header session={session} loading={loading} />
-      <Link href="/admin">
-        <a>Admin</a>
-      </Link>
-      <h1>Sound Bite Recorder</h1>
       {session && (
-        <>
+        <div className="record">
           <Recorder setAudio={setAudio} />
-          <Player bite={audio} />
-          <Upload
-            isUploading={isUploading}
-            setIsUploading={setIsUploading}
-            setAudio={setAudio}
-            audio={audio}
-            userId={session.userId}
-          />
-        </>
+          {audio && audio.data &&
+            <div className="player-upload">
+              <Player bite={audio} />
+              <Upload
+                isUploading={isUploading}
+                setIsUploading={setIsUploading}
+                setAudio={setAudio}
+                audio={audio}
+                userId={session.userId}
+              />
+            </div>
+          }
+        </div>
       )}
       <Bites bites={bites}>
         {(bite: BiteI) => <Bite key={bite.id} bite={bite} />}
