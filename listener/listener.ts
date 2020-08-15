@@ -1,29 +1,30 @@
-import tmi from "tmi.js";
 import { spawn } from "child_process";
-import { fetchAll } from "../query/fetchAll";
+import tmi from "tmi.js";
 import { BiteI } from "../components/Bites";
+import { fetchAll, Fields } from "../query/fetchAll";
+
 const { TMI_TOKEN } = process.env;
 
 async function fetchBites() {
   try {
     const records = await fetchAll();
-    const r: { [key: string]: BiteI } = records.reduce((acc, r) => {
-      // @ts-ignore
-      if (!r.fields["Approved"]) {
+    const r: { [key: string]: BiteI } = records.reduce(
+      (acc: { [key: string]: BiteI }, r: Airtable.Record<Fields>) => {
+        if (!r.fields["Approved"]) {
+          return acc;
+        }
+        if (r.fields["Name"]) {
+          acc[r.fields["Name"]] = {
+            id: r.id,
+            name: r.fields["Name"],
+            url: r.fields["URL"] || "",
+            created_on: r.fields["Created On"] || "",
+          };
+        }
         return acc;
-      }
-      // @ts-ignore
-      acc[r.fields["Name"]] = {
-        id: r.id,
-        // @ts-ignore
-        name: r.fields["Name"],
-        // @ts-ignore
-        url: r.fields["URL"],
-        // @ts-ignore
-        created_on: r.fields["Created On"],
-      };
-      return acc;
-    }, {});
+      },
+      {}
+    );
 
     return r;
   } catch (e) {

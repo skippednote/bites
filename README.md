@@ -1,4 +1,3 @@
-
 ### Todos
 
 - [x] Clear recording icon on stop
@@ -23,17 +22,15 @@
 - [x] Add CORS to API endpoints
 - [x] Authorized user can delete bites
 - [x] Fix type errors and warning
-- [ ] Check if the webm file has all the meta data
+- [x] Check if the webm file has all the meta data (Browser (blink) limitation)
 - [ ] Cleanup the UI
-- [ ] Add tests wherever possible
-
----
 
 ### Backlog
 
+- [ ] Add tests wherever possible
 - [ ] Server for running the listener
-- [ ] Ask for permissions before user can record
 
 ### Info
 
-- [twitch.tv/skippednote](https://www.twitch.tv/skippednote)
+- [Twitch](https://www.twitch.tv/skippednote)
+- [GitHub](https://www.github.com/skippednote)

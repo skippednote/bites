@@ -5,10 +5,10 @@ export type BiteI = {
   name: string;
   url: string;
   created_on: string;
-  user: string;
-  userName: string;
-  userImage: string;
-  approved: boolean;
+  user?: string;
+  userName?: string;
+  userImage?: string;
+  approved?: boolean;
 };
 
 export const Bite = ({bite}: { bite: BiteI }) => {
