@@ -66,7 +66,7 @@ const Form = ({
         </div>
         <div className="btns">
           <button className="btn" type="submit">Update</button>
-          <button className="btn" onClick={deleteBite}>Delete</button>
+          <button type="button" className="btn" onClick={deleteBite}>Delete</button>
         </div>
       </form>
     </>
@@ -80,7 +80,11 @@ export default function Admin({ data }: { data: BiteI[] }) {
 
   useEffect(() => {
     const go = async () => {
-      const data = await fetch("/api/fetch").then((r) => r.json());
+      const data = await fetch("/api/fetch", {
+        headers: {
+          admin: 'true'
+        }
+      }).then((r) => r.json());
       setBites(data);
     };
 
@@ -119,6 +123,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const data = await fetch(`${NEXTAUTH_URL}/api/fetch`, {
       headers: {
         cookie: context.req.headers.cookie || "",
+        admin: "true",
       },
     }).then((r) => r.json());
     return {

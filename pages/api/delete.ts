@@ -19,7 +19,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       throw new Error("Your are not Authorized");
     }
     const { id } = req.body;
-
     await base("Bite").destroy(id);
 
     res.end();

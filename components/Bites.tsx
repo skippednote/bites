@@ -13,14 +13,18 @@ export type BiteI = {
 };
 
 export const Bite: FunctionComponent<{bite: BiteI}> = ({ bite, children }) => {
-  const date = new Date(bite.created_on).toLocaleDateString();
+  const date = new Date(bite.created_on);
+  const month = date.toLocaleString('default', { month: 'long' })
+  const day = date.getDate();
+  const year = date.getFullYear();
+
   return (
     <div key={bite.id} className="bite">
       <Player bite={bite} />
       <div className="bite-meta">
         <p className="bite-name">{bite.name}</p>
         <div className="small">
-          <p>{date}</p>
+          <p>{`${day} ${month}, ${year}`}</p>
           <p className="bite-author">
             {bite.userName}
             <img className="image"

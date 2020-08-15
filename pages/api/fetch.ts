@@ -27,7 +27,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           approved: r.fields["Approved"],
         };
       })
-      .filter((b) => token?.isAuthorized || b.approved);
+      .filter((b) => (token?.isAuthorized && req.headers.admin) || b.approved);
 
     res.statusCode = 200;
     res.json(r);
